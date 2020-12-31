@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node index.js",
+    "debug-gcloud-server": "node src/gcloud_server/gcloud_socketIO_server.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,7 +13,7 @@
     "express": "^4.17.1",
     "firebase": "^7.5.0",
     "firebase-admin": "^8.7.0",
-    "serialport": "^8.0.5",
+    "serialport": "^9.0.2",
     "socket.io": "^2.3.0"
   }
 }
