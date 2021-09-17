@@ -45,6 +45,9 @@ void loop() {
            }else{
             Serial.println("{\"temp\":"+ String(t)+",\"hum\":"+String(h)+",\"soildhum\":"+String(soildHum)+",\"pump\":"+"1"+"}");
            }
-        }    
+        }
+       if(answer=="2"){
+           digitalWrite(pumPin,HIGH);
+        }     
     }
 }

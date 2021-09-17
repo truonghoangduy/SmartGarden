@@ -1,6 +1,10 @@
 const socketConnection = require('./src/socketIO_Pushdata.js');
 const SerialPort = require('serialport')
-const Readline = require('@serialport/parser-readline')
+const Readline = require('@serialport/parser-readline');
+const socketio = require('socket.io-client');
+const serverURL = "http://hsu-mini-garden.herokuapp.com";
+const socketClient = socketio.connect(serverURL, { reconnection: true });
+
 var isPumpToggle = false;
 async function main() {
   const port2 = await getPort();
@@ -13,7 +17,7 @@ async function main() {
 
 }
 function decoy(parser, port2) {
-  socketConnection.onPumpRequest((state) => {
+  onPumpRequest((state) => {
     isPumpToggle = state;
   })
   parser.on("data", (UnFormatedData) => {
@@ -71,16 +75,30 @@ function handleWatering(Humninity, port1) {
   // firebaseConnection.PushUserData(Humninity)
 
   // Socket Version
-  socketConnection.EmitData('iot-flutter-demo', Humninity)
+  EmitData('iot-flutter-demo', Humninity)
+}
+
+
+function EmitData(chanel, data) {
+  socketClient.emit(chanel, data)
+}
+
+function onPumpRequest(callback) {
+  socketClient.on("iot-flutter-demo-phone-to-garden", (data) => {
+    let dataJSON = JSON.parse(data);
+    callback(dataJSON.tooglePump);
+  })
 }
 
 
 
 
+socketClient.on('connect', (socket) => {
+  console.log("Connected to " + serverURL)
+  main()
+})
 
 
-
-
-main();
+// main();
 
 //https://www.raspberrypi.org/forums/viewtopic.php?t=150981

@@ -16,9 +16,11 @@ class socketIO_Controller extends StatelessWidget {
   void initState() {}
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        builder: (_) => socketIO_Handler(),
-        child: socketIO_showtext(this.title, this.notation, this.specialChar));
+    return ListenableProvider<socketIO_Handler>.value(
+        value: Provider.of<socketIO_Handler>(context),
+        builder: (context, child) {
+          return socketIO_showtext(this.title, this.notation, this.specialChar);
+        });
   }
 }
 

@@ -1,7 +1,7 @@
 const socket = require('socket.io-client');
 
-// const socketClient = socket.connect('http://34.80.236.168:8000')
-const socketClient = socket.connect('http://127.0.0.1:8000')
+const socketClient = socket.connect('https://hsu-mini-garden.herokuapp.com/')
+// const socketClient = socket.connect('http://127.0.0.1:8000')
 
 
 // const socket = require('socket.io-client')('http://127.0.0.1:8000');
