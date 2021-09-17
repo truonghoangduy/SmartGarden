@@ -14,8 +14,9 @@ class socketIO_Handler with ChangeNotifier {
   int soildhum;
   void main() {
     tooglePump = false;
-    // this.socket = IO.io('http://34.80.236.168:8000', <String, dynamic>{
-    this.socket = IO.io('http://192.168.1.11:8000', <String, dynamic>{
+    this.socket =
+        IO.io('https://hsu-mini-garden.herokuapp.com/', <String, dynamic>{
+      // this.socket = IO.io('http://192.168.43.207:8000', <String, dynamic>{
       'transports': ['websocket'],
     });
     this.socket.on("connect", (_) => print('Connected'));
@@ -32,7 +33,11 @@ class socketIO_Handler with ChangeNotifier {
     socket.on(
         'disconnect', (_) => {this.clientState = false, notifyListeners()});
 
-    socket.on('iot-flutter-demo-phone-to-garden', (data) => {print(data)});
+    socket.on('iot-flutter-demo-phone-to-garden', (data) {
+      var dataFromSocket = jsonDecode(data);
+      this.tooglePump = dataFromSocket['tooglePump'];
+      notifyListeners();
+    });
   }
 
   emitRequestPump() {
